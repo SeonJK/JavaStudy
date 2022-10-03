@@ -1,7 +1,6 @@
 package com.example.ch05_permission;
 
 import android.Manifest;
-import android.app.Instrumentation;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +14,14 @@ import androidx.core.content.ContextCompat;
 
 import com.example.ch05_permission.databinding.ActivityMainBinding;
 
+import java.util.Iterator;
 import java.util.Map;
 
 public class MainJavaActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding = null;
+    private ActivityMainBinding binding;
 
-    String[] arr = new String[]{
+    String[] permissionList = new String[]{
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -39,7 +39,7 @@ public class MainJavaActivity extends AppCompatActivity {
 
         binding.textView.setText("");
 
-        for (String permission : arr) {
+        for (String permission : permissionList) {
             int chk = ContextCompat.checkSelfPermission(this, permission);
 
             if (chk == PackageManager.PERMISSION_GRANTED) {
@@ -58,11 +58,20 @@ public class MainJavaActivity extends AppCompatActivity {
         });
     }
 
-    private ActivityResultLauncher<Array<String>> requestPermissionLauncher =
+    private ActivityResultLauncher requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
                 public void onActivityResult(Map<String, Boolean> result) {
+                    Iterator iter = result.entrySet().iterator();
 
+                    while(iter.hasNext()) {
+                        Map.Entry permission = (Map.Entry) iter.next();
+                        if ((Boolean) permission.getValue() != false) {
+                            binding.textView.append(permission.getKey() + " : 허용");
+                        } else {
+                            binding.textView.append(permission.getKey() + " : 거부");
+                        }
+                    }
                 }
             });
 }
