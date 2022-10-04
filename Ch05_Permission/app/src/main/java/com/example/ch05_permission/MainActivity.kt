@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: Map<String, Boolean> ->
             for (permission in permissions) {
-                if (!permission.value == false) {
+                if (permission.value != false) {
                     binding.textView.append("${permission.key} : 허용")
                 } else {
                     binding.textView.append("${permission.key} : 거부")

@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.ch05_permission.databinding.ActivityMainBinding;
 
-import java.util.Iterator;
 import java.util.Map;
 
 public class MainJavaActivity extends AppCompatActivity {
@@ -49,24 +48,18 @@ public class MainJavaActivity extends AppCompatActivity {
             }
         }
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 거부되어 있는 권한들을 사용자에게 확인받는다.
-
-            }
+        binding.button.setOnClickListener(view -> {
+            // 거부되어 있는 권한들을 사용자에게 확인받는다.
+            requestPermissionLauncher.launch(permissionList);
         });
     }
 
-    private ActivityResultLauncher requestPermissionLauncher =
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
                 public void onActivityResult(Map<String, Boolean> result) {
-                    Iterator iter = result.entrySet().iterator();
-
-                    while(iter.hasNext()) {
-                        Map.Entry permission = (Map.Entry) iter.next();
-                        if ((Boolean) permission.getValue() != false) {
+                    for (Map.Entry<String, Boolean> permission : result.entrySet()) {
+                        if (permission.getValue() != false) {
                             binding.textView.append(permission.getKey() + " : 허용");
                         } else {
                             binding.textView.append(permission.getKey() + " : 거부");
