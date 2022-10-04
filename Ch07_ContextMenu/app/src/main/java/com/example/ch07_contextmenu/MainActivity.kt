@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menuOne -> binding.textView.text = "첫번째 항목을 눌렀습니다."
             R.id.menuTwo -> binding.textView.text = "두번째 항목을 눌렀습니다."
             R.id.list_item1 -> binding.textView.text = "리스트 뷰의 아이템 1을 눌렀습니다. : $position"
-            R.id.list_item2 -> binding.textView.text = "리스트 뷰의 아이템 2을 눌렀습니다. : $position"
+            R.id.list_item2 -> binding.textView.text =   "리스트 뷰의 아이템 2을 눌렀습니다. : $position"
         }
 
         return super.onContextItemSelected(item)
