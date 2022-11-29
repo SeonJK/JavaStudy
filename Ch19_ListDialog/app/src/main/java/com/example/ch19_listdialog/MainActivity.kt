@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     val data = arrayOf("item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8")
-
     val data2 = arrayOf("토고", "프랑스", "스위스", "스페인", "일본", "독일", "브라질", "대한민국")
     val data3 = intArrayOf(
         R.drawable.imgflag1, R.drawable.imgflag2, R.drawable.imgflag3, R.drawable.imgflag4,
